@@ -80,7 +80,6 @@ class ArticleDAO extends SubmissionDAO {
 		$article->setSectionId($row['section_id']);
 		$article->setSectionTitle($row['section_title']);
 		$article->setSectionAbbrev($row['section_abbrev']);
-		$article->setCitations($row['citations']);
 		$article->setPages($row['pages']);
 		$article->setHideAuthor($row['hide_author']);
 
@@ -104,9 +103,9 @@ class ArticleDAO extends SubmissionDAO {
 		$article->stampModified();
 		$this->update(
 			sprintf('INSERT INTO submissions
-				(locale, context_id, section_id, stage_id, language, citations, date_submitted, date_status_modified, last_modified, status, submission_progress, pages, hide_author)
+				(locale, context_id, section_id, stage_id, language, date_submitted, date_status_modified, last_modified, status, submission_progress, pages, hide_author)
 				VALUES
-				(?, ?, ?, ?, ?, ?, %s, %s, %s, ?, ?, ?, ?)',
+				(?, ?, ?, ?, ?, %s, %s, %s, ?, ?, ?, ?)',
 				$this->datetimeToDB($article->getDateSubmitted()), $this->datetimeToDB($article->getDateStatusModified()), $this->datetimeToDB($article->getLastModified())),
 			array(
 				$article->getLocale(),
@@ -114,7 +113,6 @@ class ArticleDAO extends SubmissionDAO {
 				(int) $article->getSectionId(),
 				(int) $article->getStageId(),
 				$article->getLanguage(),
-				$article->getCitations(),
 				$article->getStatus() === null ? STATUS_QUEUED : $article->getStatus(),
 				$article->getSubmissionProgress() === null ? 1 : $article->getSubmissionProgress(),
 				$article->getPages(),
@@ -147,7 +145,6 @@ class ArticleDAO extends SubmissionDAO {
 					section_id = ?,
 					stage_id = ?,
 					language = ?,
-					citations = ?,
 					date_submitted = %s,
 					date_status_modified = %s,
 					last_modified = %s,
@@ -162,7 +159,6 @@ class ArticleDAO extends SubmissionDAO {
 				(int) $article->getSectionId(),
 				(int) $article->getStageId(),
 				$article->getLanguage(),
-				$article->getCitations(),
 				(int) $article->getStatus(),
 				(int) $article->getSubmissionProgress(),
 				$article->getPages(),
