@@ -190,13 +190,13 @@
 			{/if}
 
 			{* References *}
-			{if $article->getCitations()}
+			{if $article->getLocalizedCitations()}
 				<div class="item references">
 					<h3 class="label">
 						{translate key="submission.citations"}
 					</h3>
 					<div class="value">
-						{$article->getCitations()|nl2br}
+						{$article->getLocalizedCitations()|nl2br}
 					</div>
 				</div>
 			{/if}
