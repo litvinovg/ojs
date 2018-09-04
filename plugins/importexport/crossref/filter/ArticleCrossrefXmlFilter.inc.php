@@ -92,7 +92,7 @@ class ArticleCrossrefXmlFilter extends IssueCrossrefXmlFilter {
 
 		// title
 		$titlesNode = $doc->createElementNS($deployment->getNamespace(), 'titles');
-		$titlesNode->appendChild($node = $doc->createElementNS($deployment->getNamespace(), 'title', htmlspecialchars($submission->getTitle($submission->getLocale()), ENT_COMPAT, 'UTF-8')));
+		$titlesNode->appendChild($node = $doc->createElementNS($deployment->getNamespace(), 'title', htmlspecialchars($submission->getTitle(AppLocale::getLocale()), ENT_COMPAT, 'UTF-8')));
 		$journalArticleNode->appendChild($titlesNode);
 
 		// contributors
@@ -117,9 +117,9 @@ class ArticleCrossrefXmlFilter extends IssueCrossrefXmlFilter {
 		$journalArticleNode->appendChild($contributorsNode);
 
 		// abstract
-		if ($submission->getAbstract($submission->getLocale())) {
+		if ($submission->getAbstract(AppLocale::getLocale())) {
 			$abstractNode = $doc->createElementNS($deployment->getJATSNamespace(), 'jats:abstract');
-			$abstractNode->appendChild($node = $doc->createElementNS($deployment->getJATSNamespace(), 'jats:p', htmlspecialchars(html_entity_decode(strip_tags($submission->getAbstract($submission->getLocale())), ENT_COMPAT, 'UTF-8'), ENT_COMPAT, 'UTF-8')));
+			$abstractNode->appendChild($node = $doc->createElementNS($deployment->getJATSNamespace(), 'jats:p', htmlspecialchars(html_entity_decode(strip_tags($submission->getAbstract(AppLocale::getLocale())), ENT_COMPAT, 'UTF-8'), ENT_COMPAT, 'UTF-8')));
 			$journalArticleNode->appendChild($abstractNode);
 		}
 
