@@ -465,6 +465,7 @@ class IndividualSubscriptionDAO extends SubscriptionDAO {
 			WHERE	st.institutional = 0
 				AND s.journal_id = ? ' .
 			parent::_generateSearchSQL($status, $searchField, $searchMatch, $search, $dateField, $dateFrom, $dateTo, $params) .
+            ' ORDER BY usl.setting_value ASC, s.subscription_id',
 			$params,
 			$rangeInfo
 		);
