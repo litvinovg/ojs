@@ -190,7 +190,7 @@
 			{/if}
 
 			{* References *}
-			{if $parsedCitations->getCount() || $article->getCitations()}
+			{if $parsedCitations->getCount() || $article->getLocalizedCitations()}
 				<div class="item references">
 					<h3 class="label">
 						{translate key="submission.citations"}
@@ -200,8 +200,8 @@
 							{iterate from=parsedCitations item=parsedCitation}
 								<p>{$parsedCitation->getCitationWithLinks()|strip_unsafe_html} {call_hook name="Templates::Article::Details::Reference" citation=$parsedCitation}</p>
 							{/iterate}
-						{elseif $article->getCitations()}
-							{$article->getCitations()|nl2br}
+						{elseif $article->getLocalizedCitations()}
+							{$article->getLocalizedCitations()|nl2br}
 						{/if}
 					</div>
 				</div>
