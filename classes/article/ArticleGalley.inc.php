@@ -132,10 +132,12 @@ class ArticleGalley extends Representation {
 	 */
 	function getGalleyLabel() {
 		$label = $this->getLabel();
+		/*
 		if ($this->getLocale() != AppLocale::getLocale()) {
 			$locales = AppLocale::getAllLocales();
 			$label .= ' (' . $locales[$this->getLocale()] . ')';
 		}
+		*/
 		return $label;
 	}
 
