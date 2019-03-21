@@ -146,7 +146,7 @@
 			{if $article->getLocalizedAbstract()}
 				<div class="item abstract">
 					<h3 class="label">{translate key="article.abstract"}</h3>
-					{$article->getLocalizedAbstract()|strip_unsafe_html}
+					{$article->getLocalizedAbstract()}
 				</div>
 			{/if}
 
@@ -181,7 +181,7 @@
 									{/if}
 								</div>
 								<div class="value">
-									{$author->getLocalizedBiography()|strip_unsafe_html}
+									{$author->getLocalizedBiography()}
 								</div>
 							</div>
 						{/if}
