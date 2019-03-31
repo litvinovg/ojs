@@ -31,7 +31,7 @@ ALTER TABLE users DROP COLUMN salutation;
 ALTER TABLE users DROP COLUMN suffix;
 
 #5 
- CREATE TABLE `categories` (
+ CREATE TABLE IF NOT EXISTS `categories` (
   `category_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `context_id` bigint(20) NOT NULL,
   `parent_id` bigint(20) NOT NULL,
@@ -43,13 +43,13 @@ ALTER TABLE users DROP COLUMN suffix;
   KEY `category_context_id` (`context_id`,`parent_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `submission_categories` (
+CREATE TABLE IF NOT EXISTS `submission_categories` (
   `submission_id` bigint(20) NOT NULL,
   `category_id` bigint(20) NOT NULL,
   UNIQUE KEY `submission_categories_id` (`submission_id`,`category_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `category_settings` (
+CREATE TABLE IF NOT EXISTS `category_settings` (
   `category_id` bigint(20) NOT NULL,
   `locale` varchar(14) NOT NULL DEFAULT '',
   `setting_name` varchar(255) NOT NULL,
