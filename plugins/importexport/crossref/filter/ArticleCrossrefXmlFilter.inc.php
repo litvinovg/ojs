@@ -92,7 +92,8 @@ class ArticleCrossrefXmlFilter extends IssueCrossrefXmlFilter {
 
 		// title
 		$titlesNode = $doc->createElementNS($deployment->getNamespace(), 'titles');
-		$titlesNode->appendChild($node = $doc->createElementNS($deployment->getNamespace(), 'title', htmlspecialchars($submission->getTitle($submission->getLocale()), ENT_COMPAT, 'UTF-8')));
+		$titlesNode->appendChild($node = $doc->createElementNS($deployment->getNamespace(), 'title', htmlspecialchars($submission->getTitle('en_US'), ENT_COMPAT, 'UTF-8')));
+		$titlesNode->appendChild($node = $doc->createElementNS($deployment->getNamespace(), 'original_language_title', htmlspecialchars($submission->getTitle($submission->getLocale()), ENT_COMPAT, 'UTF-8')));
 		$journalArticleNode->appendChild($titlesNode);
 
 		// contributors
@@ -107,11 +108,11 @@ class ArticleCrossrefXmlFilter extends IssueCrossrefXmlFilter {
 			} else {
 				$personNameNode->setAttribute('sequence', 'additional');
 			}
-			if (empty($author->getLocalizedFamilyName())) {
-				$personNameNode->appendChild($node = $doc->createElementNS($deployment->getNamespace(), 'surname', htmlspecialchars(ucfirst($author->getFullName(false)), ENT_COMPAT, 'UTF-8')));
+			if (empty($author->getFamilyName('en_US'))) {
+				$personNameNode->appendChild($node = $doc->createElementNS($deployment->getNamespace(), 'surname', htmlspecialchars(ucfirst($author->getFullName(false,false,'en_US')), ENT_COMPAT, 'UTF-8')));
 			} else {
-				$personNameNode->appendChild($node = $doc->createElementNS($deployment->getNamespace(), 'given_name', htmlspecialchars(ucfirst($author->getLocalizedGivenName()), ENT_COMPAT, 'UTF-8')));
-				$personNameNode->appendChild($node = $doc->createElementNS($deployment->getNamespace(), 'surname', htmlspecialchars(ucfirst($author->getLocalizedFamilyName()), ENT_COMPAT, 'UTF-8')));
+				$personNameNode->appendChild($node = $doc->createElementNS($deployment->getNamespace(), 'given_name', htmlspecialchars(ucfirst($author->getGivenName('en_US')), ENT_COMPAT, 'UTF-8')));
+				$personNameNode->appendChild($node = $doc->createElementNS($deployment->getNamespace(), 'surname', htmlspecialchars(ucfirst($author->getFamilyName('en_US')), ENT_COMPAT, 'UTF-8')));
 			}
 			if ($author->getData('orcid')) {
 				$personNameNode->appendChild($node = $doc->createElementNS($deployment->getNamespace(), 'ORCID', $author->getData('orcid')));
@@ -122,9 +123,9 @@ class ArticleCrossrefXmlFilter extends IssueCrossrefXmlFilter {
 		$journalArticleNode->appendChild($contributorsNode);
 
 		// abstract
-		if ($submission->getAbstract($submission->getLocale())) {
+		if ($submission->getAbstract('en_US')) {
 			$abstractNode = $doc->createElementNS($deployment->getJATSNamespace(), 'jats:abstract');
-			$abstractNode->appendChild($node = $doc->createElementNS($deployment->getJATSNamespace(), 'jats:p', htmlspecialchars(html_entity_decode(strip_tags($submission->getAbstract($submission->getLocale())), ENT_COMPAT, 'UTF-8'), ENT_COMPAT, 'UTF-8')));
+			$abstractNode->appendChild($node = $doc->createElementNS($deployment->getJATSNamespace(), 'jats:p', htmlspecialchars(html_entity_decode(strip_tags($submission->getAbstract('en_US')), ENT_COMPAT, 'UTF-8'), ENT_COMPAT, 'UTF-8')));
 			$journalArticleNode->appendChild($abstractNode);
 		}
 
