@@ -99,7 +99,7 @@ class IssueCrossrefXmlFilter extends NativeExportFilter {
 		$context = $deployment->getContext();
 		$plugin = $deployment->getPlugin();
 		$headNode = $doc->createElementNS($deployment->getNamespace(), 'head');
-		$headNode->appendChild($node = $doc->createElementNS($deployment->getNamespace(), 'doi_batch_id', htmlspecialchars($context->getData('initials', $context->getPrimaryLocale()) . '_' . time(), ENT_COMPAT, 'UTF-8')));
+		$headNode->appendChild($node = $doc->createElementNS($deployment->getNamespace(), 'doi_batch_id', htmlspecialchars($context->getSetting('initials', 'en_US') . '_' . time(), ENT_COMPAT, 'UTF-8')));
 		$headNode->appendChild($node = $doc->createElementNS($deployment->getNamespace(), 'timestamp', time()));
 		$depositorNode = $doc->createElementNS($deployment->getNamespace(), 'depositor');
 		$depositorName = $plugin->getSetting($context->getId(), 'depositorName');
@@ -143,16 +143,16 @@ class IssueCrossrefXmlFilter extends NativeExportFilter {
 
 		$journalMetadataNode = $doc->createElementNS($deployment->getNamespace(), 'journal_metadata');
 		// Full title
-		$journalTitle = $context->getName($context->getPrimaryLocale());
+		$journalTitle = $context->getName('en_US');
 		// Attempt a fall back, in case the localized name is not set.
 		if ($journalTitle == '') {
-			$journalTitle = $context->getData('abbreviation', $context->getPrimaryLocale());
+			$journalTitle = $context->getSetting('abbreviation', 'en_US');
 		}
 		$journalMetadataNode->appendChild($node = $doc->createElementNS($deployment->getNamespace(), 'full_title', htmlspecialchars($journalTitle, ENT_COMPAT, 'UTF-8')));
 		/* Abbreviated title - defaulting to initials if no abbreviation found */
-		$journalAbbrev = $context->getData('abbreviation', $context->getPrimaryLocale());
+		$journalAbbrev = $context->getSetting('abbreviation', 'en_US');
 		if ( $journalAbbrev == '' ) {
-			$journalAbbrev = $context->getData('acronym', $context->getPrimaryLocale());
+			$journalAbbrev = $context->getSetting('acronym', 'en_US');
 		}
 		$journalMetadataNode->appendChild($node = $doc->createElementNS($deployment->getNamespace(), 'abbrev_title', htmlspecialchars($journalAbbrev, ENT_COMPAT, 'UTF-8')));
 		/* Both ISSNs are permitted for CrossRef, so sending whichever one (or both) */
