@@ -133,8 +133,10 @@ class ArticleGalley extends Representation {
 	function getGalleyLabel() {
 		$label = $this->getLabel();
 		if ($this->getLocale() != AppLocale::getLocale()) {
-			$locales = AppLocale::getAllLocales();
-			$label .= ' (' . $locales[$this->getLocale()] . ')';
+            $languageDao = DAORegistry::getDAO('LanguageDAO');
+            $code = substr($this->getLocale(),0,2);
+            $lang = ($languageDao->getLanguageByCode($code,AppLocale::getLocale()))->getName();
+            $label .= ' (' . $lang . ')';
 		}
 		return $label;
 	}
